@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data To Base64 converter</title>
+</head>
+<body style="background-color: skyblue;">
+    <div>
+        <input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL();" />
+        <label for="color">Change background Color</label>
+        <input type="color" name="color" id="color" value="#87ceeb" onchange="changeBgColor();">
+        <br>
+        <div id="imgTest"></div>
+        <br>
+        <textarea name="data" id="data" rows="30" cols="100"></textarea>
+        <br>
+        <br>
+        <small><a href="https://stackoverflow.com/a/23669825/13057978">Reference from stakeoverflow</a></small>
+    </div>
+    <script type='text/javascript'>
+      function encodeImageFileAsURL() {
+    
+        var filesSelected = document.getElementById("inputFileToLoad").files;
+        if (filesSelected.length > 0) {
+          var fileToLoad = filesSelected[0];
+    
+          var fileReader = new FileReader();
+    
+          fileReader.onload = function(fileLoadedEvent) {
+            var srcData = fileLoadedEvent.target.result; // <--- data: base64
+    
+            var newImage = document.createElement('img');
+            newImage.src = srcData;
+    
+            document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+            // alert("Converted Base64 version is " + document.getElementById("imgTest").innerHTML);
+            document.getElementById('data').innerText = srcData;
+          }
+          fileReader.readAsDataURL(fileToLoad);
+        }
+      }
+      function changeBgColor(){
+          var bg = document.body
+          var color = document.getElementById('color')
+          bg.style.backgroundColor = color.value
+      }
+    </script>
+</body>
+</html>
